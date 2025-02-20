@@ -1,0 +1,104 @@
+{
+  "/Users/stephhoang/web-builder/serverless.yml": {
+    "versionFramework": "4.6.2",
+    "servicePath": "/Users/stephhoang/web-builder/serverless.yml",
+    "serviceConfigFileName": "serverless.yml",
+    "service": {
+      "service": "kis-serverless",
+      "provider": {
+        "name": "aws",
+        "runtime": "nodejs18.x",
+        "region": "us-east-1",
+        "stage": "dev",
+        "memorySize": 512,
+        "timeout": 10,
+        "environment": {
+          "STAGE": "${self:provider.stage}",
+          "JWT_SECRET": "<REDACTED>",
+          "REFRESH_SECRET": "<REDACTED>",
+          "REDIS_HOST": "${env:REDIS_HOST}",
+          "REDIS_PORT": "${env:REDIS_PORT}",
+          "DB_HOST": "${env:DB_HOST}",
+          "DB_USER": "${env:DB_USER}",
+          "DB_PASSWORD": "<REDACTED>",
+          "DB_NAME": "${env:DB_NAME}",
+          "DB_PORT": "${env:DB_PORT}"
+        }
+      },
+      "plugins": [
+        "serverless-offline"
+      ],
+      "custom": {
+        "serverless-offline": {
+          "httpPort": "${env:PORT}"
+        }
+      },
+      "functions": {
+        "register": {
+          "handler": "apps/web_builder/wb_backend/wb_serverless/wb_api_register/src/handler.register",
+          "events": [
+            {
+              "http": {
+                "path": "register",
+                "method": "post",
+                "cors": true
+              }
+            }
+          ]
+        }
+      }
+    },
+    "provider": {
+      "name": "aws",
+      "runtime": "nodejs18.x",
+      "region": "us-east-1",
+      "stage": "dev",
+      "memorySize": 512,
+      "timeout": 10,
+      "environment": {
+        "STAGE": "${self:provider.stage}",
+        "JWT_SECRET": "<REDACTED>",
+        "REFRESH_SECRET": "<REDACTED>",
+        "REDIS_HOST": "${env:REDIS_HOST}",
+        "REDIS_PORT": "${env:REDIS_PORT}",
+        "DB_HOST": "${env:DB_HOST}",
+        "DB_USER": "${env:DB_USER}",
+        "DB_PASSWORD": "<REDACTED>",
+        "DB_NAME": "${env:DB_NAME}",
+        "DB_PORT": "${env:DB_PORT}"
+      }
+    },
+    "dashboard": {
+      "isEnabledForService": false,
+      "requiredAuthentication": false,
+      "orgFeaturesInUse": null,
+      "orgObservabilityIntegrations": null,
+      "serviceAppId": null,
+      "serviceProvider": null,
+      "instanceParameters": null
+    },
+    "error": {
+      "message": "Cannot resolve '${env:JWT_SECRET}' variable at 'provider.environment.JWT_SECRET'. No value is available for this variable, and no default value was provided. Please check your variable definitions or provide a default value.",
+      "stack": "Error: Cannot resolve '${env:JWT_SECRET}' variable at 'provider.environment.JWT_SECRET'. No value is available for this variable, and no default value was provided. Please check your variable definitions or provide a default value.\n    at _ResolverManager.resolve (/Users/stephhoang/.serverless/releases/4.6.2/sf-core/src/lib/resolvers/manager.js:801:11)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at _ResolverManager.#handlePlaceholderNode (/Users/stephhoang/.serverless/releases/4.6.2/sf-core/src/lib/resolvers/manager.js:702:9)\n    at <anonymous> (/Users/stephhoang/.serverless/releases/4.6.2/sf-core/src/lib/resolvers/manager.js:578:11)\n    at processNodeAndHandleCompletion (/Users/stephhoang/.serverless/releases/4.6.2/sf-core/src/lib/resolvers/graph.js:33:5)",
+      "code": "MISSING_VARIABLE_RESULT"
+    },
+    "serviceRawFile": "service: kis-serverless\n\nprovider:\n  name: aws\n  runtime: nodejs18.x\n  region: us-east-1\n  stage: ${opt:stage}\n  memorySize: 512 # Optional\n  timeout: 10   # repository wide Lambda timeout\n  environment:  # repository wide Lambda env variables\n    STAGE: ${self:provider.stage}\n    #  JWT\n    JWT_SECRET: ${env:JWT_SECRET}\n    REFRESH_SECRET: ${env:REFRESH_SECRET}\n    # redis\n    REDIS_HOST: ${env:REDIS_HOST}\n    REDIS_PORT: ${env:REDIS_PORT}\n    # MySQL\n    DB_HOST: ${env:DB_HOST}\n    DB_USER: ${env:DB_USER}\n    DB_PASSWORD: ${env:DB_PASSWORD}\n    DB_NAME: ${env:DB_NAME}\n    DB_PORT: ${env:DB_PORT}\n    \nplugins:\n- serverless-offline # used for local execution\n\ncustom:\n  serverless-offline:\n    httpPort: ${env:PORT}\n\nfunctions:\n  # hello:\n  #   handler: apps/apis/api_hello/src/handler.hello\n  #   events:\n  #     - http:\n  #         path: hello\n  #         method: get\n  #         cors: true\n  #   environment:\n  #     ENV_VAR_1: ${env:ENV_VAR_1}\n\n  # login:\n  #   handler: apps/apis/api_login/src/handler.start\n  #   events:\n  #     - http:\n  #         path: login\n  #         method: post\n  #         cors: true\n  #     - http:\n  #         path: refresh\n  #         method: post\n  #         cors: true\n\n  register:\n    handler: apps/web_builder/wb_backend/wb_serverless/wb_api_register/src/handler.register\n    events:\n      - http:\n          path: register\n          method: post\n          cors: true\n\n  # verify-token:\n  #   handler: apps/apis/api_verify-token/src/handler.run\n  #   events:\n  #     - http:\n  #         path: verify-token\n  #         method: post\n  #         cors: true\n\n  # logout:\n  #   handler: apps/apis/api_logout/src/handler.logout\n  #   events:\n  #     - http:\n  #         path: logout\n  #         method: post\n  #         cors: true\n\n  # get-users:\n  #   handler: apps/apis/api_get_users/src/handler.run\n  #   events:\n  #     - http:\n  #         path: get-users\n  #         method: get\n  #         cors: true",
+    "command": [
+      "offline"
+    ],
+    "options": {
+      "debug": "*",
+      "stage": "dev",
+      "reloadHandler": true
+    },
+    "orgId": "ee39a20e-8ffb-4591-9d50-476e2247999d",
+    "orgName": "stephhoang30",
+    "userId": "PZ6HPxSkfYYpcHpdY0",
+    "userName": "stephhoang30",
+    "serviceProviderAwsCfStackId": null,
+    "serviceProviderAwsCfStackCreated": null,
+    "serviceProviderAwsCfStackUpdated": null,
+    "serviceProviderAwsCfStackStatus": null,
+    "serviceProviderAwsCfStackOutputs": null
+  }
+}
